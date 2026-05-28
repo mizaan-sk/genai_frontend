@@ -57,12 +57,12 @@ export async function logout() {
 // get logged in user data
 export async function getMe() {
     try {
-        // fetch current user info
-        const response = await api.get('/api/auth/getMe')
+        const response = await api.get('/api/auth/get-me')
 
         return response.data
 
     } catch (error) {
         console.log(error)
+        return null
     }
 }
