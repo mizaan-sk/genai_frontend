@@ -1,0 +1,725 @@
+// // ─── Variables ───────────────────────────────────────────────
+// $bg-dark:      #0d1117;
+// $bg-card:      #161b27;
+// $bg-panel:     #1a2236;
+// $bg-input:     #1e2a3a;
+// $accent-pink:  #f43f7f;
+// $accent-blue:  #3b82f6;
+// $text-primary: #ffffff;
+// $text-muted:   rgba(255, 255, 255, 0.5);
+// $border:       rgba(255, 255, 255, 0.08);
+
+// // ─── Base ─────────────────────────────────────────────────────
+// .home {
+//   width: 100%;
+//   min-height: 100vh;
+//   padding: 48px 20px 40px;
+//   background: $bg-dark;
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   gap: 28px;
+//   font-family: 'Segoe UI', system-ui, sans-serif;
+
+//   // ─── Header ───────────────────────────────────────────────
+//   &__header {
+//     text-align: center;
+//     max-width: 620px;
+
+//     h1 {
+//       font-size: clamp(1.6rem, 4vw, 2.4rem);
+//       font-weight: 800;
+//       color: $text-primary;
+//       line-height: 1.25;
+//       margin-bottom: 12px;
+
+//       .accent {
+//         color: $accent-pink;
+//       }
+//     }
+
+//     p {
+//       color: $text-muted;
+//       font-size: 1rem;
+//       line-height: 1.6;
+//     }
+//   }
+
+//   // ─── Main Card ────────────────────────────────────────────
+//   &__card {
+//     width: 100%;
+//     max-width: 1000px;
+//     background: $bg-card;
+//     border: 1px solid $border;
+//     border-radius: 20px;
+//     display: flex;
+//     overflow: hidden;
+//     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+//   }
+
+//   // ─── Footer Bar ───────────────────────────────────────────
+//   &__footer {
+//     width: 100%;
+//     max-width: 1000px;
+//     display: flex;
+//     align-items: center;
+//     justify-content: space-between;
+//     padding: 16px 24px;
+//     background: $bg-card;
+//     border: 1px solid $border;
+//     border-radius: 16px;
+//     flex-wrap: wrap;
+//     gap: 12px;
+
+//     .footer__hint {
+//       color: $text-muted;
+//       font-size: 0.85rem;
+//     }
+//   }
+// }
+
+// // ─── Divider between panels ────────────────────────────────────
+// .panel-divider {
+//   width: 1px;
+//   background: $border;
+//   flex-shrink: 0;
+
+//   @media (max-width: 768px) {
+//     width: 100%;
+//     height: 1px;
+//   }
+// }
+
+// // ─── Panels ───────────────────────────────────────────────────
+// .panel {
+//   display: flex;
+//   flex-direction: column;
+//   padding: 28px 28px 20px;
+//   flex: 1;
+//   min-width: 0;
+
+//   &__title {
+//     display: flex;
+//     align-items: center;
+//     gap: 10px;
+//     margin-bottom: 20px;
+
+//     h2 {
+//       font-size: 1.05rem;
+//       font-weight: 700;
+//       color: $text-primary;
+//       flex: 1;
+//     }
+
+//     .panel__icon {
+//       font-size: 1.1rem;
+//     }
+//   }
+
+//   // Left panel: textarea fills height
+//   &--left {
+//     textarea {
+//       flex: 1;
+//       min-height: 380px;
+//       resize: none;
+//       border: 1px solid $border;
+//       outline: none;
+//       padding: 18px;
+//       border-radius: 14px;
+//       background: $bg-input;
+//       color: $text-primary;
+//       font-size: 0.92rem;
+//       line-height: 1.7;
+//       transition: 0.25s ease;
+//       font-family: inherit;
+
+//       &::placeholder { color: $text-muted; }
+//       &:focus {
+//         background: rgba(255,255,255,0.06);
+//         border-color: rgba(59,130,246,0.5);
+//         box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+//       }
+//     }
+
+//     .char-count {
+//       text-align: right;
+//       font-size: 0.78rem;
+//       color: $text-muted;
+//       margin-top: 8px;
+//     }
+//   }
+
+//   &--right {
+//     gap: 0;
+//   }
+// }
+
+// // ─── Badges ───────────────────────────────────────────────────
+// .badge {
+//   font-size: 0.65rem;
+//   font-weight: 700;
+//   letter-spacing: 0.06em;
+//   padding: 3px 8px;
+//   border-radius: 6px;
+
+//   &--required {
+//     background: rgba(244, 63, 127, 0.15);
+//     color: $accent-pink;
+//     border: 1px solid rgba(244, 63, 127, 0.35);
+//   }
+
+//   &--best {
+//     background: rgba(244, 63, 127, 0.15);
+//     color: $accent-pink;
+//     border: 1px solid rgba(244, 63, 127, 0.35);
+//   }
+// }
+
+// // ─── Input Group ──────────────────────────────────────────────
+// .input-group {
+//   display: flex;
+//   flex-direction: column;
+//   gap: 10px;
+//   margin-bottom: 4px;
+
+//   label {
+//     color: $text-primary;
+//     font-size: 0.92rem;
+//     font-weight: 600;
+//     display: flex;
+//     align-items: center;
+//     gap: 8px;
+//   }
+
+//   textarea {
+//     width: 100%;
+//     min-height: 130px;
+//     resize: none;
+//     border: 1px solid $border;
+//     outline: none;
+//     border-radius: 12px;
+//     padding: 14px 16px;
+//     background: $bg-input;
+//     color: $text-primary;
+//     font-size: 0.88rem;
+//     line-height: 1.6;
+//     transition: 0.25s ease;
+//     font-family: inherit;
+
+//     &::placeholder { color: $text-muted; }
+//     &:focus {
+//       background: rgba(255,255,255,0.06);
+//       border-color: rgba(59,130,246,0.5);
+//       box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+//     }
+//   }
+// }
+
+// // ─── Drop Zone ────────────────────────────────────────────────
+// .drop-zone {
+//   border: 2px dashed rgba(255,255,255,0.15);
+//   border-radius: 14px;
+//   padding: 28px 20px;
+//   text-align: center;
+//   cursor: pointer;
+//   transition: 0.25s ease;
+//   background: $bg-input;
+
+//   &:hover,
+//   &--active {
+//     border-color: $accent-blue;
+//     background: rgba(59, 130, 246, 0.06);
+//   }
+
+//   &--filled {
+//     border-style: solid;
+//     border-color: rgba(52, 211, 153, 0.4);
+//     background: rgba(52, 211, 153, 0.05);
+//   }
+
+//   &__icon {
+//     font-size: 1.8rem;
+//     margin-bottom: 8px;
+//   }
+
+//   &__text {
+//     color: $text-primary;
+//     font-size: 0.88rem;
+//     font-weight: 600;
+//     margin-bottom: 4px;
+//   }
+
+//   &__hint {
+//     color: $text-muted;
+//     font-size: 0.78rem;
+//   }
+// }
+
+// // ─── OR Divider ───────────────────────────────────────────────
+// .or-divider {
+//   display: flex;
+//   align-items: center;
+//   gap: 12px;
+//   margin: 18px 0;
+//   color: $text-muted;
+//   font-size: 0.8rem;
+
+//   &::before,
+//   &::after {
+//     content: '';
+//     flex: 1;
+//     height: 1px;
+//     background: $border;
+//   }
+
+//   span {
+//     flex-shrink: 0;
+//   }
+// }
+
+// // ─── Info Note ────────────────────────────────────────────────
+// .info-note {
+//   display: flex;
+//   align-items: flex-start;
+//   gap: 10px;
+//   background: rgba(59, 130, 246, 0.1);
+//   border: 1px solid rgba(59, 130, 246, 0.2);
+//   border-radius: 12px;
+//   padding: 14px 16px;
+//   margin-top: 16px;
+
+//   &__icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+
+//   p {
+//     color: rgba(147, 197, 253, 0.9);
+//     font-size: 0.82rem;
+//     line-height: 1.55;
+
+//     strong { color: #93c5fd; }
+//   }
+// }
+
+// // ─── Generate Button ──────────────────────────────────────────
+// .generate-btn {
+//   border: none;
+//   outline: none;
+//   padding: 14px 28px;
+//   border-radius: 12px;
+//   background: linear-gradient(135deg, #f43f7f, #e11d6a);
+//   color: #fff;
+//   font-size: 0.95rem;
+//   font-weight: 700;
+//   cursor: pointer;
+//   transition: 0.25s ease;
+//   white-space: nowrap;
+//   box-shadow: 0 6px 20px rgba(244, 63, 127, 0.4);
+
+//   &:hover {
+//     transform: translateY(-2px);
+//     box-shadow: 0 10px 28px rgba(244, 63, 127, 0.5);
+//   }
+
+//   &:active {
+//     transform: scale(0.97);
+//   }
+// }
+
+// // ─── Responsive ───────────────────────────────────────────────
+// @media (max-width: 768px) {
+//   .home {
+//     padding: 32px 14px 28px;
+//     gap: 20px;
+
+//     &__card {
+//       flex-direction: column;
+//       border-radius: 16px;
+//     }
+
+//     &__footer {
+//       flex-direction: column;
+//       align-items: flex-start;
+//     }
+//   }
+
+//   .panel {
+//     padding: 22px 20px 18px;
+//   }
+
+//   .generate-btn {
+//     width: 100%;
+//     text-align: center;
+//   }
+// }
+
+// @media (max-width: 480px) {
+//   .home {
+//     padding: 20px 12px;
+//   }
+
+//   .panel--left textarea {
+//     min-height: 260px;
+//   }
+// }
+
+// ─── Variables ───────────────────────────────────────────────
+$bg-dark:      #0d1117;
+$bg-card:      #161b27;
+$bg-panel:     #1a2236;
+$bg-input:     #1e2a3a;
+$accent-pink:  #f43f7f;
+$accent-blue:  #3b82f6;
+$text-primary: #ffffff;
+$text-muted:   rgba(255, 255, 255, 0.5);
+$border:       rgba(255, 255, 255, 0.08);
+
+// ─── Base ─────────────────────────────────────────────────────
+.home {
+  width: 100%;
+  min-height: 100vh;
+  padding: 48px 20px 40px;
+  background: $bg-dark;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+
+  // ─── Header ───────────────────────────────────────────────
+  &__header {
+    text-align: center;
+    max-width: 620px;
+
+    h1 {
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 800;
+      color: $text-primary;
+      line-height: 1.25;
+      margin-bottom: 12px;
+
+      .accent {
+        color: $accent-pink;
+      }
+    }
+
+    p {
+      color: $text-muted;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+  }
+
+  // ─── Main Card ────────────────────────────────────────────
+  &__card {
+    width: 100%;
+    max-width: 1000px;
+    background: $bg-card;
+    border: 1px solid $border;
+    border-radius: 20px;
+    display: flex;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  }
+
+  // ─── Footer Bar ───────────────────────────────────────────
+  &__footer {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    background: $bg-card;
+    border: 1px solid $border;
+    border-radius: 16px;
+    flex-wrap: wrap;
+    gap: 12px;
+
+    .footer__hint {
+      color: $text-muted;
+      font-size: 0.85rem;
+    }
+  }
+}
+
+// ─── Divider between panels ────────────────────────────────────
+.panel-divider {
+  width: 1px;
+  background: $border;
+  flex-shrink: 0;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: 1px;
+  }
+}
+
+// ─── Panels ───────────────────────────────────────────────────
+.panel {
+  display: flex;
+  flex-direction: column;
+  padding: 28px 28px 20px;
+  flex: 1;
+  min-width: 0;
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+
+    h2 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: $text-primary;
+      flex: 1;
+    }
+
+    .panel__icon {
+      font-size: 1.1rem;
+    }
+  }
+
+  // Left panel: textarea fills height
+  &--left {
+    textarea {
+      flex: 1;
+      min-height: 380px;
+      resize: none;
+      border: 1px solid $border;
+      outline: none;
+      padding: 18px;
+      border-radius: 14px;
+      background: $bg-input;
+      color: $text-primary;
+      font-size: 0.92rem;
+      line-height: 1.7;
+      transition: 0.25s ease;
+      font-family: inherit;
+
+      &::placeholder { color: $text-muted; }
+      &:focus {
+        background: rgba(255,255,255,0.06);
+        border-color: rgba(59,130,246,0.5);
+        box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+      }
+    }
+
+    .char-count {
+      text-align: right;
+      font-size: 0.78rem;
+      color: $text-muted;
+      margin-top: 8px;
+    }
+  }
+
+  &--right {
+    gap: 0;
+  }
+}
+
+// ─── Badges ───────────────────────────────────────────────────
+.badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 3px 8px;
+  border-radius: 6px;
+
+  &--required {
+    background: rgba(244, 63, 127, 0.15);
+    color: $accent-pink;
+    border: 1px solid rgba(244, 63, 127, 0.35);
+  }
+
+  &--best {
+    background: rgba(244, 63, 127, 0.15);
+    color: $accent-pink;
+    border: 1px solid rgba(244, 63, 127, 0.35);
+  }
+}
+
+// ─── Input Group ──────────────────────────────────────────────
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 4px;
+
+  label {
+    color: $text-primary;
+    font-size: 0.92rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  textarea {
+    width: 100%;
+    min-height: 130px;
+    resize: none;
+    border: 1px solid $border;
+    outline: none;
+    border-radius: 12px;
+    padding: 14px 16px;
+    background: $bg-input;
+    color: $text-primary;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    transition: 0.25s ease;
+    font-family: inherit;
+
+    &::placeholder { color: $text-muted; }
+    &:focus {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(59,130,246,0.5);
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+    }
+  }
+}
+
+// ─── Drop Zone ────────────────────────────────────────────────
+.drop-zone {
+  border: 2px dashed rgba(255,255,255,0.15);
+  border-radius: 14px;
+  padding: 28px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.25s ease;
+  background: $bg-input;
+
+  &:hover,
+  &--active {
+    border-color: $accent-blue;
+    background: rgba(59, 130, 246, 0.06);
+  }
+
+  &--filled {
+    border-style: solid;
+    border-color: rgba(52, 211, 153, 0.4);
+    background: rgba(52, 211, 153, 0.05);
+  }
+
+  &__icon {
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+  }
+
+  &__text {
+    color: $text-primary;
+    font-size: 0.88rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  &__hint {
+    color: $text-muted;
+    font-size: 0.78rem;
+  }
+}
+
+// ─── OR Divider ───────────────────────────────────────────────
+.or-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 18px 0;
+  color: $text-muted;
+  font-size: 0.8rem;
+
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: $border;
+  }
+
+  span {
+    flex-shrink: 0;
+  }
+}
+
+// ─── Info Note ────────────────────────────────────────────────
+.info-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-top: 16px;
+
+  &__icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+
+  p {
+    color: rgba(147, 197, 253, 0.9);
+    font-size: 0.82rem;
+    line-height: 1.55;
+
+    strong { color: #93c5fd; }
+  }
+}
+
+// ─── Generate Button ──────────────────────────────────────────
+.generate-btn {
+  border: none;
+  outline: none;
+  padding: 14px 28px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #f43f7f, #e11d6a);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.25s ease;
+  white-space: nowrap;
+  box-shadow: 0 6px 20px rgba(244, 63, 127, 0.4);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(244, 63, 127, 0.5);
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+// ─── Responsive ───────────────────────────────────────────────
+@media (max-width: 768px) {
+  .home {
+    padding: 32px 14px 28px;
+    gap: 20px;
+
+    &__card {
+      flex-direction: column;
+      border-radius: 16px;
+    }
+
+    &__footer {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  .panel {
+    padding: 22px 20px 18px;
+  }
+
+  .generate-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .home {
+    padding: 20px 12px;
+  }
+
+  .panel--left textarea {
+    min-height: 260px;
+  }
+}

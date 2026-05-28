@@ -13,7 +13,7 @@ const Login = () => {
         await handleLogin({ email, password })
         navigate("/")
     }
-    console.log(handleSubmit)
+    // console.log(handleSubmit)
     if (loading) {
         return (<main><h1>Loading.......</h1></main>)
     }

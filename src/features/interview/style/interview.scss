@@ -1,0 +1,551 @@
+// ─── Variables (mirrors home.scss) ───────────────────────────
+$bg-dark:      #0d1117;
+$bg-card:      #161b27;
+$bg-panel:     #1a2236;
+$bg-input:     #1e2a3a;
+$accent-pink:  #f43f7f;
+$accent-blue:  #3b82f6;
+$accent-green: #34d399;
+$accent-amber: #fbbf24;
+$text-primary: #ffffff;
+$text-muted:   rgba(255, 255, 255, 0.5);
+$border:       rgba(255, 255, 255, 0.08);
+$border-hover: rgba(255, 255, 255, 0.14);
+
+// ─── Layout ───────────────────────────────────────────────────
+.interview {
+  display: grid;
+  grid-template-columns: 220px 1fr 240px;
+  min-height: 100vh;
+  background: $bg-dark;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+
+  @media (max-width: 1100px) {
+    grid-template-columns: 200px 1fr 200px;
+  }
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+  }
+}
+
+// ─── Sidebars ─────────────────────────────────────────────────
+.sidebar {
+  padding: 28px 20px;
+  border-right: 1px solid $border;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.1) transparent;
+
+  &--right {
+    border-right: none;
+    border-left: 1px solid $border;
+
+    @media (max-width: 900px) {
+      border-left: none;
+      border-top: 1px solid $border;
+      height: auto;
+      position: static;
+    }
+  }
+
+  &--left {
+    @media (max-width: 900px) {
+      border-right: none;
+      border-bottom: 1px solid $border;
+      height: auto;
+      position: static;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+  }
+
+  &__heading {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: $text-muted;
+    margin-bottom: 14px;
+  }
+
+  &__section {
+    display: flex;
+    flex-direction: column;
+  }
+
+  // ── Score Ring ──
+  &__score {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__score-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: $text-muted;
+  }
+}
+
+// ─── Score Ring SVG ───────────────────────────────────────────
+.score-ring {
+  position: relative;
+  width: 84px;
+  height: 84px;
+
+  svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+  }
+
+  .ring-bg {
+    fill: none;
+    stroke: rgba(255,255,255,0.06);
+    stroke-width: 6;
+  }
+
+  .ring-fill {
+    fill: none;
+    stroke: $accent-pink;
+    stroke-width: 6;
+    stroke-linecap: round;
+    transition: stroke-dasharray 1s ease;
+  }
+
+  &__text {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: $text-primary;
+  }
+}
+
+// ─── Nav Items ────────────────────────────────────────────────
+.sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  @media (max-width: 900px) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: transparent;
+  border: none;
+  color: $text-muted;
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.2s ease;
+  position: relative;
+  text-align: left;
+
+  &:hover {
+    background: rgba(255,255,255,0.05);
+    color: $text-primary;
+  }
+
+  &--active {
+    background: rgba(244, 63, 127, 0.1);
+    color: $text-primary;
+    font-weight: 600;
+
+    .nav-item__icon { filter: none; }
+  }
+
+  &__icon { font-size: 1rem; flex-shrink: 0; }
+  &__label { flex: 1; }
+
+  &__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: $accent-pink;
+    flex-shrink: 0;
+  }
+}
+
+// ─── Main Content ─────────────────────────────────────────────
+.main-content {
+  padding: 32px 28px;
+  overflow-y: auto;
+
+  @media (max-width: 768px) {
+    padding: 22px 16px;
+  }
+}
+
+.content-section {
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+
+    h2 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: $text-primary;
+    }
+  }
+
+  &__subtitle {
+    color: $text-muted;
+    font-size: 0.85rem;
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+}
+
+.count-badge {
+  background: rgba(244, 63, 127, 0.12);
+  color: $accent-pink;
+  border: 1px solid rgba(244, 63, 127, 0.25);
+  border-radius: 20px;
+  padding: 3px 12px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+// ─── Question List ────────────────────────────────────────────
+.q-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.q-card {
+  border: 1px solid $border;
+  border-radius: 14px;
+  background: $bg-card;
+  overflow: hidden;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    border-color: $border-hover;
+  }
+
+  &--open {
+    border-color: rgba(244, 63, 127, 0.3);
+    box-shadow: 0 4px 24px rgba(244, 63, 127, 0.08);
+  }
+
+  &__header {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px 18px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+  }
+
+  &__num {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: rgba(244, 63, 127, 0.12);
+    color: $accent-pink;
+    font-size: 0.72rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+  }
+
+  &__question {
+    flex: 1;
+    color: $text-primary;
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.55;
+  }
+
+  &__chevron {
+    color: $text-muted;
+    font-size: 0.7rem;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+
+  &__body {
+    padding: 0 18px 18px 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
+    @media (max-width: 600px) {
+      padding: 0 16px 16px;
+    }
+  }
+
+  &__intention,
+  &__answer {
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__intention {
+    background: rgba(59, 130, 246, 0.07);
+    border: 1px solid rgba(59, 130, 246, 0.15);
+
+    p { color: rgba(147, 197, 253, 0.85); font-size: 0.83rem; line-height: 1.6; }
+  }
+
+  &__answer {
+    background: rgba(52, 211, 153, 0.05);
+    border: 1px solid rgba(52, 211, 153, 0.15);
+
+    p { color: rgba(167, 243, 208, 0.85); font-size: 0.83rem; line-height: 1.6; }
+  }
+
+  &__intention-label,
+  &__answer-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: $text-muted;
+  }
+}
+
+// ─── Roadmap Day Cards ────────────────────────────────────────
+.day-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.day-card {
+  border: 1px solid $border;
+  border-radius: 14px;
+  background: $bg-card;
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+
+  &:hover { border-color: $border-hover; }
+
+  &--open {
+    border-color: rgba(59, 130, 246, 0.3);
+    box-shadow: 0 4px 24px rgba(59, 130, 246, 0.07);
+  }
+
+  &__header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+  }
+
+  &__badge {
+    flex-shrink: 0;
+    background: rgba(59, 130, 246, 0.12);
+    color: $accent-blue;
+    border-radius: 8px;
+    padding: 4px 10px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+  }
+
+  &__focus {
+    flex: 1;
+    color: $text-primary;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  &__chevron {
+    color: $text-muted;
+    font-size: 0.7rem;
+    flex-shrink: 0;
+  }
+
+  &__tasks {
+    list-style: none;
+    padding: 0 18px 18px 60px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    @media (max-width: 600px) { padding: 0 16px 16px; }
+
+    li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: rgba(255,255,255,0.7);
+      font-size: 0.84rem;
+      line-height: 1.55;
+    }
+  }
+}
+
+.task-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: $accent-blue;
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+
+// ─── Right Sidebar Specifics ───────────────────────────────────
+
+// Skill Gap Tags
+.gap-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.gap-tag {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.73rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+
+  &--high {
+    background: rgba(244, 63, 127, 0.1);
+    color: $accent-pink;
+    border-color: rgba(244, 63, 127, 0.25);
+  }
+  &--medium {
+    background: rgba(251, 191, 36, 0.1);
+    color: $accent-amber;
+    border-color: rgba(251, 191, 36, 0.25);
+  }
+  &--low {
+    background: rgba(52, 211, 153, 0.1);
+    color: $accent-green;
+    border-color: rgba(52, 211, 153, 0.25);
+  }
+}
+
+.gap-legend {
+  display: flex;
+  align-items: center;
+  font-size: 0.72rem;
+  color: $text-muted;
+}
+
+.legend-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+
+  &--high   { background: $accent-pink; }
+  &--medium { background: $accent-amber; }
+  &--low    { background: $accent-green; }
+}
+
+// Quick Stats
+.stats-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px;
+    background: $bg-input;
+    border: 1px solid $border;
+    border-radius: 10px;
+  }
+
+  &__label { color: $text-muted; font-size: 0.8rem; }
+  &__value { color: $text-primary; font-weight: 700; font-size: 0.88rem; }
+}
+
+// Today's Focus
+.today-card {
+  background: rgba(59, 130, 246, 0.07);
+  border: 1px solid rgba(59, 130, 246, 0.18);
+  border-radius: 12px;
+  padding: 16px;
+
+  &__day {
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: $accent-blue;
+    margin-bottom: 6px;
+  }
+
+  &__focus {
+    color: $text-primary;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    line-height: 1.4;
+  }
+
+  &__tasks {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    li {
+      color: rgba(147, 197, 253, 0.8);
+      font-size: 0.78rem;
+      line-height: 1.5;
+      padding-left: 12px;
+      position: relative;
+
+      &::before {
+        content: '·';
+        position: absolute;
+        left: 2px;
+        color: $accent-blue;
+        font-size: 1rem;
+      }
+    }
+  }
+}
