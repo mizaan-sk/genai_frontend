@@ -1,551 +1,479 @@
-// ─── Variables (mirrors home.scss) ───────────────────────────
-$bg-dark:      #0d1117;
-$bg-card:      #161b27;
-$bg-panel:     #1a2236;
-$bg-input:     #1e2a3a;
-$accent-pink:  #f43f7f;
-$accent-blue:  #3b82f6;
-$accent-green: #34d399;
-$accent-amber: #fbbf24;
-$text-primary: #ffffff;
-$text-muted:   rgba(255, 255, 255, 0.5);
-$border:       rgba(255, 255, 255, 0.08);
-$border-hover: rgba(255, 255, 255, 0.14);
+// ── Shared Variables (mirrors home.scss theme) ────────────────────────────────
+$bg-page: #0d1117;
+$bg-card: #161b22;
+$bg-panel: #1c2230;
+$bg-input: #1e2535;
+$border-color: #2a3348;
+$text-primary: #e6edf3;
+$text-muted: #7d8590;
+$accent: #ff2d78;
+$font-stack: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
-// ─── Layout ───────────────────────────────────────────────────
-.interview {
-  display: grid;
-  grid-template-columns: 220px 1fr 240px;
-  min-height: 100vh;
-  background: $bg-dark;
-  font-family: 'Segoe UI', system-ui, sans-serif;
+// severity palette
+$severity-high: #ff4d4d;
+$severity-medium: #f5a623;
+$severity-low: #3fb950;
 
-  @media (max-width: 1100px) {
-    grid-template-columns: 200px 1fr 200px;
-  }
-
-  @media (max-width: 900px) {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr auto;
-  }
+*::-webkit-scrollbar {
+    display: none;
 }
 
-// ─── Sidebars ─────────────────────────────────────────────────
-.sidebar {
-  padding: 28px 20px;
-  border-right: 1px solid $border;
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255,255,255,0.1) transparent;
-
-  &--right {
-    border-right: none;
-    border-left: 1px solid $border;
-
-    @media (max-width: 900px) {
-      border-left: none;
-      border-top: 1px solid $border;
-      height: auto;
-      position: static;
-    }
-  }
-
-  &--left {
-    @media (max-width: 900px) {
-      border-right: none;
-      border-bottom: 1px solid $border;
-      height: auto;
-      position: static;
-      flex-direction: row;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-  }
-
-  &__heading {
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: $text-muted;
-    margin-bottom: 14px;
-  }
-
-  &__section {
-    display: flex;
-    flex-direction: column;
-  }
-
-  // ── Score Ring ──
-  &__score {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-  }
-
-  &__score-label {
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: $text-muted;
-  }
-}
-
-// ─── Score Ring SVG ───────────────────────────────────────────
-.score-ring {
-  position: relative;
-  width: 84px;
-  height: 84px;
-
-  svg {
+// ── Page Shell ────────────────────────────────────────────────────────────────
+.interview-page {
     width: 100%;
-    height: 100%;
-    transform: rotate(-90deg);
-  }
-
-  .ring-bg {
-    fill: none;
-    stroke: rgba(255,255,255,0.06);
-    stroke-width: 6;
-  }
-
-  .ring-fill {
-    fill: none;
-    stroke: $accent-pink;
-    stroke-width: 6;
-    stroke-linecap: round;
-    transition: stroke-dasharray 1s ease;
-  }
-
-  &__text {
-    position: absolute;
-    inset: 0;
+    min-height: 100vh;
+    background-color: $bg-page;
+    color: $text-primary;
+    font-family: $font-stack;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.15rem;
-    font-weight: 800;
-    color: $text-primary;
-  }
+    align-items: stretch;
+    padding: 1.5rem;
+    box-sizing: border-box;
 }
 
-// ─── Nav Items ────────────────────────────────────────────────
-.sidebar__nav {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-
-  @media (max-width: 900px) {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
+// ── 3-Column Layout ───────────────────────────────────────────────────────────
+.interview-layout {
+    display: flex;
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    background-color: $bg-card;
+    border: 1px solid $border-color;
+    border-radius: 1rem;
+    justify-content: space-between;
 }
 
-.nav-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 14px;
-  border-radius: 10px;
-  background: transparent;
-  border: none;
-  color: $text-muted;
-  font-size: 0.88rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: 0.2s ease;
-  position: relative;
-  text-align: left;
-
-  &:hover {
-    background: rgba(255,255,255,0.05);
-    color: $text-primary;
-  }
-
-  &--active {
-    background: rgba(244, 63, 127, 0.1);
-    color: $text-primary;
-    font-weight: 600;
-
-    .nav-item__icon { filter: none; }
-  }
-
-  &__icon { font-size: 1rem; flex-shrink: 0; }
-  &__label { flex: 1; }
-
-  &__dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: $accent-pink;
+.interview-divider {
+    width: 1px;
+    background-color: $border-color;
     flex-shrink: 0;
-  }
 }
 
-// ─── Main Content ─────────────────────────────────────────────
-.main-content {
-  padding: 32px 28px;
-  overflow-y: auto;
-
-  @media (max-width: 768px) {
-    padding: 22px 16px;
-  }
-}
-
-.content-section {
-  &__title {
+// ── Left Nav ─────────────────────────────────────────────────────────────────
+.interview-nav {
+    width: 220px;
+    flex-shrink: 0;
+    padding: 1.75rem 1rem;
     display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 8px;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.25rem;
+
+
+
+
+    &__label {
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: $text-muted;
+        padding: 0 0.75rem;
+        margin-bottom: 0.5rem;
+    }
+
+    &__item {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        width: 100%;
+        padding: 0.65rem 0.75rem;
+        background: none;
+        border: none;
+        border-radius: 0.5rem;
+        color: $text-muted;
+        font-family: $font-stack;
+        font-size: 0.875rem;
+        cursor: pointer;
+        text-align: left;
+        transition: background-color 0.15s, color 0.15s;
+
+        &:hover {
+            background-color: $bg-panel;
+            color: $text-primary;
+        }
+
+        &--active {
+            background-color: rgba($accent, 0.1);
+            color: $accent;
+
+            .interview-nav__icon svg {
+                stroke: $accent;
+            }
+        }
+    }
+
+    &__icon {
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+    }
+}
+
+// ── Center Content ────────────────────────────────────────────────────────────
+.interview-content {
+    flex: 1;
+    padding: 1.75rem 2rem;
+    overflow-y: auto;
+    min-height: initial;
+    max-height: calc(100vh - 3rem);
+    padding-bottom: 5rem;
+    align-items: flex-start;
+
+
+
+
+
+
+
+
+    section {
+        min-height: 100%;
+    }
+}
+
+.content-header {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid $border-color;
 
     h2 {
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: $text-primary;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: $text-primary;
+        margin: 0;
     }
-  }
 
-  &__subtitle {
-    color: $text-muted;
-    font-size: 0.85rem;
-    margin-bottom: 24px;
-    line-height: 1.5;
-  }
+    &__count {
+        font-size: 0.8rem;
+        color: $text-muted;
+        background-color: $bg-panel;
+        padding: 0.15rem 0.6rem;
+        border-radius: 2rem;
+        border: 1px solid $border-color;
+    }
 }
 
-.count-badge {
-  background: rgba(244, 63, 127, 0.12);
-  color: $accent-pink;
-  border: 1px solid rgba(244, 63, 127, 0.25);
-  border-radius: 20px;
-  padding: 3px 12px;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-}
-
-// ─── Question List ────────────────────────────────────────────
+// ── Question Cards ────────────────────────────────────────────────────────────
 .q-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
 }
 
 .q-card {
-  border: 1px solid $border;
-  border-radius: 14px;
-  background: $bg-card;
-  overflow: hidden;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    background-color: $bg-panel;
+    border: 1px solid $border-color;
+    border-radius: 0.6rem;
+    overflow: hidden;
+    transition: border-color 0.2s;
 
-  &:hover {
-    border-color: $border-hover;
-  }
-
-  &--open {
-    border-color: rgba(244, 63, 127, 0.3);
-    box-shadow: 0 4px 24px rgba(244, 63, 127, 0.08);
-  }
-
-  &__header {
-    width: 100%;
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    padding: 16px 18px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    text-align: left;
-  }
-
-  &__num {
-    flex-shrink: 0;
-    width: 28px;
-    height: 28px;
-    border-radius: 8px;
-    background: rgba(244, 63, 127, 0.12);
-    color: $accent-pink;
-    font-size: 0.72rem;
-    font-weight: 800;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 2px;
-  }
-
-  &__question {
-    flex: 1;
-    color: $text-primary;
-    font-size: 0.9rem;
-    font-weight: 600;
-    line-height: 1.55;
-  }
-
-  &__chevron {
-    color: $text-muted;
-    font-size: 0.7rem;
-    flex-shrink: 0;
-    margin-top: 4px;
-  }
-
-  &__body {
-    padding: 0 18px 18px 60px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-
-    @media (max-width: 600px) {
-      padding: 0 16px 16px;
+    &:hover {
+        border-color: lighten($border-color, 8%);
     }
-  }
 
-  &__intention,
-  &__answer {
-    border-radius: 10px;
-    padding: 14px 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  &__intention {
-    background: rgba(59, 130, 246, 0.07);
-    border: 1px solid rgba(59, 130, 246, 0.15);
-
-    p { color: rgba(147, 197, 253, 0.85); font-size: 0.83rem; line-height: 1.6; }
-  }
-
-  &__answer {
-    background: rgba(52, 211, 153, 0.05);
-    border: 1px solid rgba(52, 211, 153, 0.15);
-
-    p { color: rgba(167, 243, 208, 0.85); font-size: 0.83rem; line-height: 1.6; }
-  }
-
-  &__intention-label,
-  &__answer-label {
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: $text-muted;
-  }
-}
-
-// ─── Roadmap Day Cards ────────────────────────────────────────
-.day-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.day-card {
-  border: 1px solid $border;
-  border-radius: 14px;
-  background: $bg-card;
-  overflow: hidden;
-  transition: border-color 0.2s ease;
-
-  &:hover { border-color: $border-hover; }
-
-  &--open {
-    border-color: rgba(59, 130, 246, 0.3);
-    box-shadow: 0 4px 24px rgba(59, 130, 246, 0.07);
-  }
-
-  &__header {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 16px 18px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    text-align: left;
-  }
-
-  &__badge {
-    flex-shrink: 0;
-    background: rgba(59, 130, 246, 0.12);
-    color: $accent-blue;
-    border-radius: 8px;
-    padding: 4px 10px;
-    font-size: 0.72rem;
-    font-weight: 800;
-    letter-spacing: 0.04em;
-  }
-
-  &__focus {
-    flex: 1;
-    color: $text-primary;
-    font-size: 0.9rem;
-    font-weight: 600;
-  }
-
-  &__chevron {
-    color: $text-muted;
-    font-size: 0.7rem;
-    flex-shrink: 0;
-  }
-
-  &__tasks {
-    list-style: none;
-    padding: 0 18px 18px 60px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-
-    @media (max-width: 600px) { padding: 0 16px 16px; }
-
-    li {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      color: rgba(255,255,255,0.7);
-      font-size: 0.84rem;
-      line-height: 1.55;
+    &__header {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 0.9rem 1rem;
+        cursor: pointer;
+        user-select: none;
     }
-  }
+
+    &__index {
+        flex-shrink: 0;
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: $accent;
+        background-color: rgba($accent, 0.1);
+        border: 1px solid rgba($accent, 0.2);
+        border-radius: 0.3rem;
+        padding: 0.15rem 0.4rem;
+        margin-top: 2px;
+    }
+
+    &__question {
+        flex: 1;
+        margin: 0;
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: $text-primary;
+        line-height: 1.5;
+    }
+
+    &__chevron {
+        flex-shrink: 0;
+        color: $text-muted;
+        transition: transform 0.2s;
+        margin-top: 2px;
+
+        &--open {
+            transform: rotate(180deg);
+            color: $accent;
+        }
+    }
+
+    &__body {
+        padding: 0 1rem 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        border-top: 1px solid $border-color;
+        padding-top: 0.75rem;
+    }
+
+    &__section {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+
+        p {
+            margin: 0;
+            font-size: 0.835rem;
+            color: lighten($text-muted, 15%);
+            line-height: 1.6;
+        }
+    }
+
+    &__tag {
+        font-size: 0.68rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        padding: 0.15rem 0.5rem;
+        border-radius: 0.25rem;
+        width: fit-content;
+
+        &--intention {
+            color: #a78bfa;
+            background-color: rgba(#a78bfa, 0.1);
+            border: 1px solid rgba(#a78bfa, 0.2);
+        }
+
+        &--answer {
+            color: #3fb950;
+            background-color: rgba(#3fb950, 0.1);
+            border: 1px solid rgba(#3fb950, 0.2);
+        }
+    }
 }
 
-.task-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: $accent-blue;
-  flex-shrink: 0;
-  margin-top: 6px;
-}
-
-// ─── Right Sidebar Specifics ───────────────────────────────────
-
-// Skill Gap Tags
-.gap-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 12px;
-}
-
-.gap-tag {
-  padding: 5px 12px;
-  border-radius: 20px;
-  font-size: 0.73rem;
-  font-weight: 600;
-  border: 1px solid transparent;
-
-  &--high {
-    background: rgba(244, 63, 127, 0.1);
-    color: $accent-pink;
-    border-color: rgba(244, 63, 127, 0.25);
-  }
-  &--medium {
-    background: rgba(251, 191, 36, 0.1);
-    color: $accent-amber;
-    border-color: rgba(251, 191, 36, 0.25);
-  }
-  &--low {
-    background: rgba(52, 211, 153, 0.1);
-    color: $accent-green;
-    border-color: rgba(52, 211, 153, 0.25);
-  }
-}
-
-.gap-legend {
-  display: flex;
-  align-items: center;
-  font-size: 0.72rem;
-  color: $text-muted;
-}
-
-.legend-dot {
-  display: inline-block;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-
-  &--high   { background: $accent-pink; }
-  &--medium { background: $accent-amber; }
-  &--low    { background: $accent-green; }
-}
-
-// Quick Stats
-.stats-list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-
-  li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 14px;
-    background: $bg-input;
-    border: 1px solid $border;
-    border-radius: 10px;
-  }
-
-  &__label { color: $text-muted; font-size: 0.8rem; }
-  &__value { color: $text-primary; font-weight: 700; font-size: 0.88rem; }
-}
-
-// Today's Focus
-.today-card {
-  background: rgba(59, 130, 246, 0.07);
-  border: 1px solid rgba(59, 130, 246, 0.18);
-  border-radius: 12px;
-  padding: 16px;
-
-  &__day {
-    font-size: 0.68rem;
-    font-weight: 800;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: $accent-blue;
-    margin-bottom: 6px;
-  }
-
-  &__focus {
-    color: $text-primary;
-    font-size: 0.85rem;
-    font-weight: 700;
-    margin-bottom: 12px;
-    line-height: 1.4;
-  }
-
-  &__tasks {
-    list-style: none;
+// ── Road Map ──────────────────────────────────────────────────────────────────
+.roadmap-list {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 0;
+    position: relative;
 
-    li {
-      color: rgba(147, 197, 253, 0.8);
-      font-size: 0.78rem;
-      line-height: 1.5;
-      padding-left: 12px;
-      position: relative;
-
-      &::before {
-        content: '·';
+    // vertical timeline line
+    &::before {
+        content: '';
         position: absolute;
-        left: 2px;
-        color: $accent-blue;
-        font-size: 1rem;
-      }
+        left: 28px;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: linear-gradient(to bottom, $accent, rgba($accent, 0.1));
+        border-radius: 1px;
     }
-  }
+}
+
+.roadmap-day {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.75rem 0 0.75rem 3.5rem;
+    position: relative;
+
+    // dot on timeline
+    &::before {
+        content: '';
+        position: absolute;
+        left: 21px;
+        top: 1.05rem;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background-color: $bg-card;
+        border: 2px solid $accent;
+    }
+
+    &__header {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+    }
+
+    &__badge {
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: $accent;
+        background-color: rgba($accent, 0.1);
+        border: 1px solid rgba($accent, 0.25);
+        padding: 0.1rem 0.5rem;
+        border-radius: 2rem;
+    }
+
+    &__focus {
+        margin: 0;
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: $text-primary;
+    }
+
+    &__tasks {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+
+        li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            font-size: 0.845rem;
+            color: lighten($text-muted, 12%);
+            line-height: 1.5;
+        }
+    }
+
+    &__bullet {
+        flex-shrink: 0;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background-color: $text-muted;
+        margin-top: 8px;
+    }
+}
+
+// ── Right Sidebar ─────────────────────────────────────────────────────────────
+.interview-sidebar {
+    width: 240px;
+    flex-shrink: 0;
+    padding: 1.75rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.sidebar-divider {
+    height: 1px;
+    background-color: $border-color;
+}
+
+// Match Score
+.match-score {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+
+    &__label {
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: $text-muted;
+        margin: 0;
+        align-self: flex-start;
+    }
+
+    &__ring {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border: 4px solid;
+
+        &.score--high {
+            border-color: $severity-low;
+        }
+
+        &.score--mid {
+            border-color: $severity-medium;
+        }
+
+        &.score--low {
+            border-color: $severity-high;
+        }
+    }
+
+    &__value {
+        font-size: 1.6rem;
+        font-weight: 800;
+        color: $text-primary;
+        line-height: 1;
+    }
+
+    &__pct {
+        font-size: 0.75rem;
+        color: $text-muted;
+        margin-top: -2px;
+    }
+
+    &__sub {
+        margin: 0;
+        font-size: 0.75rem;
+        color: $severity-low;
+        text-align: center;
+    }
+}
+
+// Skill Gaps
+.skill-gaps {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+
+    &__label {
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: $text-muted;
+        margin: 0;
+    }
+
+    &__list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+}
+
+.skill-tag {
+    font-size: 0.775rem;
+    font-weight: 500;
+    padding: 0.3rem 0.7rem;
+    border-radius: 0.4rem;
+    border: 1px solid;
+    cursor: default;
+
+    &--high {
+        color: $severity-high;
+        background-color: rgba($severity-high, 0.1);
+        border-color: rgba($severity-high, 0.25);
+    }
+
+    &--medium {
+        color: $severity-medium;
+        background-color: rgba($severity-medium, 0.1);
+        border-color: rgba($severity-medium, 0.25);
+    }
+
+    &--low {
+        color: $severity-low;
+        background-color: rgba($severity-low, 0.1);
+        border-color: rgba($severity-low, 0.25);
+    }
 }
