@@ -7,14 +7,44 @@ import {
 import { useContext, useEffect } from "react";
 import { interviewContext } from "../interview.context.jsx";
 import { useParams } from "react-router";
+
+const GENERIC_DOWNLOAD_ERROR =
+  "We couldn't generate your resume right now. Please try again in a moment.";
+
+/** Reads the server's message out of a non-PDF blob response. */
+const readErrorMessage = async (blob) => {
+  try {
+    return JSON.parse(await blob.text()).message || GENERIC_DOWNLOAD_ERROR;
+  } catch {
+    return GENERIC_DOWNLOAD_ERROR;
+  }
+};
+
+/** Pulls `resume_xxx.pdf` out of a Content-Disposition header. */
+const parseFilename = (contentDisposition) => {
+  if (!contentDisposition) return null;
+  const match = /filename\*?=(?:UTF-8'')?"?([^";]+)"?/i.exec(contentDisposition);
+  return match ? decodeURIComponent(match[1].trim()) : null;
+};
+
 export const useInterview = () => {
   const context = useContext(interviewContext);
   const { interviewId } = useParams();
   if (!context) {
     throw new Error("useInterview must be used within InterviewProvider");
   }
-  const { loading, setLoading, report, setReport, reports, setReports } =
-    context;
+  const {
+    loading,
+    setLoading,
+    report,
+    setReport,
+    reports,
+    setReports,
+    downloadingResume,
+    setDownloadingResume,
+    downloadError,
+    setDownloadError,
+  } = context;
 
   const generateReport = async ({
     resumeFile,
@@ -38,24 +68,60 @@ export const useInterview = () => {
     }
     return response.interviewReport;
   };
+  /**
+   * Asks the server for the tailored resume PDF and saves it to disk.
+   * Uses its own loading flag — the report stays on screen while it runs.
+   */
   const getResumePdf = async (interviewReportId) => {
-        setLoading(true)
-        let response = null
-        try {
-            response = await generateResumePdf({ interviewReportId })
-            const url = window.URL.createObjectURL(new Blob([ response ], { type: "application/pdf" }))
-            const link = document.createElement("a")
-            link.href = url
-            link.setAttribute("download", `resume_${interviewReportId}.pdf`)
-            document.body.appendChild(link)
-            link.click()
-        }
-        catch (error) {
-            console.log(error)
-        } finally {
-            setLoading(false)
-        }
+    if (!interviewReportId) return;
+
+    setDownloadingResume(true);
+    setDownloadError(null);
+
+    let objectUrl = null;
+    try {
+      const response = await generateResumePdf({ interviewReportId });
+      const data = response.data;
+
+      // With responseType "blob" an error payload also arrives as a blob, so
+      // anything that isn't a PDF means the server failed — saving it anyway
+      // is what produced "downloaded" files that wouldn't open.
+      if (!data.type || !data.type.includes("pdf")) {
+        throw new Error(await readErrorMessage(data));
+      }
+      if (!data.size) {
+        throw new Error("The server returned an empty resume file.");
+      }
+
+      const filename =
+        parseFilename(response.headers["content-disposition"]) ||
+        `resume_${interviewReportId}.pdf`;
+
+      objectUrl = window.URL.createObjectURL(
+        new Blob([data], { type: "application/pdf" }),
+      );
+
+      const link = document.createElement("a");
+      link.href = objectUrl;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (error) {
+      console.error(error);
+      // A failed request carries the server's JSON message inside a blob too.
+      const body = error.response?.data;
+      setDownloadError(
+        body instanceof Blob
+          ? await readErrorMessage(body)
+          : error.message || GENERIC_DOWNLOAD_ERROR,
+      );
+    } finally {
+      // give the browser a tick to pick the blob up before we drop it
+      if (objectUrl) setTimeout(() => window.URL.revokeObjectURL(objectUrl), 1000);
+      setDownloadingResume(false);
     }
+  };
   const getReportById = async (interviewId) => {
     setLoading(true);
     let response = null;
@@ -99,6 +165,8 @@ export const useInterview = () => {
     generateReport,
     getReportById,
     getReports,
-    getResumePdf
+    getResumePdf,
+    downloadingResume,
+    downloadError,
   };
 };

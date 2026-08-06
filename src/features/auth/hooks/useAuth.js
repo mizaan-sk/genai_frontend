@@ -9,8 +9,10 @@ export const useAuth = () => {
         try {
             const data = await login({ email, password });
             setUser(data.user)
+            return data
         } catch (error) {
-            console.log(error)
+            // bubble up so the form can render the failure reason
+            throw error
         } finally {
             setLoading(false);
         }
@@ -22,8 +24,10 @@ export const useAuth = () => {
         try {
             const data = await register({ username, email, password });
             setUser(data.user)
+            return data
         } catch (error) {
-            console.log(error)
+            // bubble up so the form can render the failure reason
+            throw error
         } finally {
             setLoading(false)
         }
@@ -32,10 +36,11 @@ export const useAuth = () => {
     const handleLogout = async () => {
         setLoading(true);
         try {
-            const data = await logout()
+            await logout()
             setUser(null)
-        } catch (error) {
-            console.log(error)
+        } catch {
+            // clear the session locally regardless
+            setUser(null)
         } finally {
             setLoading(false)
         }

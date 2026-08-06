@@ -2,7 +2,7 @@ import axios from "axios"
 
 // create axios instance
 const api = axios.create({
-    baseURL: "http://localhost:3000", // backend url
+    baseURL: import.meta.env.VITE_API_URL || "http://localhost:3000", // backend url
     withCredentials: true // send cookies with request
 })
 
@@ -19,8 +19,8 @@ export async function register({ username, email, password }) {
         return response.data
 
     } catch (error) {
-        // show error in console
-        console.log(error)
+        // hand it to the caller so the UI can show it
+        throw error
     }
 }
 
@@ -37,7 +37,7 @@ export async function login({ email, password }) {
         return response.data
 
     } catch (error) {
-        console.log(error)
+        throw error
     }
 }
 
@@ -49,8 +49,8 @@ export async function logout() {
 
         return response.data
 
-    } catch (error) {
-        console.log(error)
+    } catch {
+        // logging out locally is what matters — ignore a failed server call
     }
 }
 
@@ -61,8 +61,8 @@ export async function getMe() {
 
         return response.data
 
-    } catch (error) {
-        console.log(error)
+    } catch {
+        // not signed in
         return null
     }
 }

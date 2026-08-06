@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: import.meta.env.VITE_API_URL || "http://localhost:3000",
   withCredentials: true,
 });
 /**
@@ -39,14 +39,13 @@ export const getAllInterviewReports = async () => {
   return response.data;
 };
 
+/**
+ * @description service to generate the tailored resume PDF.
+ * Returns the raw axios response so the caller can read the blob *and* the
+ * filename the server sent in Content-Disposition.
+ */
 export const generateResumePdf = async ({ interviewReportId }) => {
-  const response = await api.post(
-    `/api/interview/resume/pdf/${interviewReportId}`,
-    null,
-    {
-      responseType: "blob",
-    },
-  );
-
-  return response.data;
+  return api.post(`/api/interview/resume/pdf/${interviewReportId}`, null, {
+    responseType: "blob",
+  });
 };

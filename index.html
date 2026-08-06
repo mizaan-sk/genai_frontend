@@ -1,10 +1,38 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="night">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>frontend</title>
+    <meta name="description" content="Turn any job description into a tailored interview strategy — questions, model answers and a day-by-day preparation road map." />
+    <meta name="theme-color" content="#0a0a0e" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>Interview Studio</title>
+
+    <script>
+      // Paint the correct theme before first render so there is no flash.
+      (function () {
+        try {
+          var saved = localStorage.getItem("interview-studio-theme");
+          var theme =
+            saved === "day" || saved === "night"
+              ? saved
+              : window.matchMedia("(prefers-color-scheme: light)").matches
+                ? "day"
+                : "night";
+          document.documentElement.setAttribute("data-theme", theme);
+        } catch (e) {
+          document.documentElement.setAttribute("data-theme", "night");
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

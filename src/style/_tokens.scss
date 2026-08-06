@@ -1,0 +1,146 @@
+/* =============================================================================
+   Design tokens
+   -----------------------------------------------------------------------------
+   Every colour, radius and shadow in the app resolves to one of these custom
+   properties. Two themes ship: `night` (default) and `day`. The theme is set on
+   <html data-theme="..."> by the ThemeProvider.
+   ========================================================================== */
+
+:root {
+    /* ── Type ─────────────────────────────────────────────────────────────── */
+    --font-ui: 'Inter', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-display: 'Instrument Serif', 'Iowan Old Style', Georgia, 'Times New Roman', serif;
+
+    /* ── Radii ────────────────────────────────────────────────────────────── */
+    --r-xs: 8px;
+    --r-sm: 10px;
+    --r-md: 14px;
+    --r-lg: 20px;
+    --r-xl: 28px;
+    --r-pill: 999px;
+
+    /* ── Motion ───────────────────────────────────────────────────────────── */
+    --ease: cubic-bezier(0.2, 0.8, 0.25, 1);
+    --dur-1: 140ms;
+    --dur-2: 240ms;
+    --dur-3: 420ms;
+
+    /* ── Layout ───────────────────────────────────────────────────────────── */
+    --shell: 1180px;
+}
+
+/* ── Night (default) ─────────────────────────────────────────────────────── */
+:root,
+:root[data-theme='night'] {
+    color-scheme: dark;
+
+    --bg: #0a0a0e;
+    --bg-veil: rgba(10, 10, 14, 0.72);
+    --surface: #101016;
+    --surface-2: #16161e;
+    --surface-3: #1d1d26;
+    --surface-inset: #0d0d13;
+
+    --border: #24242f;
+    --border-soft: #1b1b24;
+    --border-strong: #34343f;
+
+    --text: #f3f3f6;
+    --text-2: #a2a2b0;
+    --text-3: #6d6d7b;
+
+    --accent: #ff3d74;
+    --accent-hover: #ff5c8c;
+    --accent-ink: #ffffff;
+    --accent-soft: rgba(255, 61, 116, 0.14);
+    --accent-line: rgba(255, 61, 116, 0.32);
+    --accent-glow: rgba(255, 61, 116, 0.18);
+
+    --ok: #35d08a;
+    --ok-soft: rgba(53, 208, 138, 0.13);
+    --ok-line: rgba(53, 208, 138, 0.28);
+
+    --warn: #f2b23d;
+    --warn-soft: rgba(242, 178, 61, 0.13);
+    --warn-line: rgba(242, 178, 61, 0.28);
+
+    --danger: #ff6060;
+    --danger-soft: rgba(255, 96, 96, 0.13);
+    --danger-line: rgba(255, 96, 96, 0.3);
+
+    --info: #7ea2ff;
+    --info-soft: rgba(126, 162, 255, 0.12);
+    --info-line: rgba(126, 162, 255, 0.28);
+
+    --violet: #a98bff;
+    --violet-soft: rgba(169, 139, 255, 0.13);
+    --violet-line: rgba(169, 139, 255, 0.28);
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+    --shadow-md: 0 2px 6px rgba(0, 0, 0, 0.45), 0 12px 28px -18px rgba(0, 0, 0, 0.9);
+    --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.4), 0 40px 80px -40px rgba(0, 0, 0, 1);
+
+    --ring: 0 0 0 3px rgba(255, 61, 116, 0.28);
+    --hairline: rgba(255, 255, 255, 0.06);
+
+    /* ambient page wash */
+    --wash-1: rgba(255, 61, 116, 0.14);
+    --wash-2: rgba(96, 122, 255, 0.1);
+}
+
+/* ── Day ─────────────────────────────────────────────────────────────────── */
+:root[data-theme='day'] {
+    color-scheme: light;
+
+    --bg: #f6f4f1;
+    --bg-veil: rgba(246, 244, 241, 0.75);
+    --surface: #ffffff;
+    --surface-2: #fbfaf8;
+    --surface-3: #f1eee9;
+    --surface-inset: #faf9f7;
+
+    --border: #e6e1d9;
+    --border-soft: #efebe4;
+    --border-strong: #d5cec3;
+
+    --text: #17161c;
+    --text-2: #5f5c68;
+    --text-3: #8b8794;
+
+    --accent: #d6003f;
+    --accent-hover: #b60035;
+    --accent-ink: #ffffff;
+    --accent-soft: rgba(214, 0, 63, 0.07);
+    --accent-line: rgba(214, 0, 63, 0.22);
+    --accent-glow: rgba(214, 0, 63, 0.12);
+
+    --ok: #0f7f52;
+    --ok-soft: rgba(15, 127, 82, 0.08);
+    --ok-line: rgba(15, 127, 82, 0.22);
+
+    --warn: #a96b00;
+    --warn-soft: rgba(169, 107, 0, 0.08);
+    --warn-line: rgba(169, 107, 0, 0.22);
+
+    --danger: #bf2c2c;
+    --danger-soft: rgba(191, 44, 44, 0.07);
+    --danger-line: rgba(191, 44, 44, 0.22);
+
+    --info: #2f56c4;
+    --info-soft: rgba(47, 86, 196, 0.07);
+    --info-line: rgba(47, 86, 196, 0.2);
+
+    --violet: #6d47c7;
+    --violet-soft: rgba(109, 71, 199, 0.07);
+    --violet-line: rgba(109, 71, 199, 0.2);
+
+    --shadow-sm: 0 1px 2px rgba(23, 22, 28, 0.05);
+    --shadow-md: 0 1px 3px rgba(23, 22, 28, 0.06), 0 12px 28px -20px rgba(23, 22, 28, 0.35);
+    --shadow-lg: 0 2px 6px rgba(23, 22, 28, 0.05), 0 36px 70px -40px rgba(23, 22, 28, 0.45);
+
+    --ring: 0 0 0 3px rgba(214, 0, 63, 0.18);
+    --hairline: rgba(23, 22, 28, 0.05);
+
+    --wash-1: rgba(214, 0, 63, 0.09);
+    --wash-2: rgba(47, 86, 196, 0.07);
+}
