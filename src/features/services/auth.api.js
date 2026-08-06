@@ -1,10 +1,4 @@
-import axios from "axios"
-
-// create axios instance
-const api = axios.create({
-    baseURL: import.meta.env.VITE_API_URL || "http://localhost:3000", // backend url
-    withCredentials: true // send cookies with request
-})
+import api, { setToken, clearToken } from "./api.client"
 
 // register new user
 export async function register({ username, email, password }) {
@@ -14,6 +8,9 @@ export async function register({ username, email, password }) {
             '/api/auth/register',
             { username, email, password },
         )
+
+        // keep the token so later requests authenticate without the cookie
+        setToken(response.data?.token)
 
         // return backend response
         return response.data
@@ -33,6 +30,9 @@ export async function login({ email, password }) {
             { email, password }
         )
 
+        // keep the token so later requests authenticate without the cookie
+        setToken(response.data?.token)
+
         // return response data
         return response.data
 
@@ -51,6 +51,9 @@ export async function logout() {
 
     } catch {
         // logging out locally is what matters — ignore a failed server call
+    } finally {
+        // drop the token either way, so the session really ends
+        clearToken()
     }
 }
 
@@ -61,7 +64,12 @@ export async function getMe() {
 
         return response.data
 
-    } catch {
+    } catch (error) {
+        // an expired or rejected token is worth dropping; a network blip is not
+        const status = error.response?.status
+        if (status === 401 || status === 403) {
+            clearToken()
+        }
         // not signed in
         return null
     }
